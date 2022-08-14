@@ -1,0 +1,14 @@
+#
+# TextViewer 0.1
+#
+prexe=textviewer
+prstarter=default
+desc="An Text Viewer for files."
+author="Nescar"
+#Special Variables (Available in 0.8.0)
+# Direct executing without "pil load textviewer"
+DoDefaultExecutable=true
+# This pack owns file with type TEXT
+FileTypeOwns="1=text_type"
+# This pack are not able to own this type of file: RAW open
+ProhibitedFilesTypesOwns="1=raw_file"

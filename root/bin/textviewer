@@ -1,0 +1,45 @@
+#!/bin/bash
+mkdir -p $HOME/.textviewer
+if [ -f $HOME/.textviewer/app.conf ]; then
+. $HOME/.textviewer/app.conf
+echo "[$(date)] Seeing the config to start up the app" >> $HOME/.textviewer/app.log
+fi
+
+if [ $selected ]; then
+true
+else
+export selected=less
+echo "[$(date)] Config not found" >> $HOME/.textviewer/app.log
+fi
+
+if [ $[1-9] ]; then
+case $1 in
+	--conf)
+	if [ ! -f $HOME/.textviewer/app.conf ]; then
+	echo "creating new config"
+	echo "#Eyes (engine) for TextViewer: more, less" >> $HOME/.textviewer/app.conf
+	echo "# selected is the eye of the engine. (more, less)"
+	echo "export selected=less" >> $HOME/.textviewer/app.conf
+	nano $HOME/.textviewer/app.conf
+	echo "[$(date)] Modified config" >> $HOME/.textviewer/app.log
+	else
+	nano $HOME/.textviewer/app.conf
+	fi
+	chmod 777 $HOME/.textviewer/app.conf
+	;;
+	--log)
+	if [ -f $HOME/.textviewer/app.log ]; then
+	cat $HOME/.textviewer/app.log
+	echo "[$(date)] Viewed log by $USER" >> $HOME/.textviewer/app.log
+	fi
+	;;
+	*)
+	if [ -f "$1" ]; then
+	cat "$1" | $selected
+	else
+	echo "Error: no args or incorrect."
+	fi
+	;;
+esac
+fi
+
